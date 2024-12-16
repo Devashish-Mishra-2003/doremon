@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doraemon Adventures</title>
+    <style>
+        :root {
+            --primary-blue: #1E88E5;
+            --secondary-blue: #64B5F6;
+            --light-blue: #E3F2FD;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            background-color: var(--light-blue);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            background-color: var(--primary-blue);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar-menu a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-menu a:hover {
+            color: yellow;
+        }
+
+        /* Sections */
+        .section {
+            
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .section2 {
+            height: 350px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .section1 {
+            display:none;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Character Cards */
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .character-card {
+            text-align: center;
+            background-color: var(--light-blue);
+            border-radius: 10px;
+            padding: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .character-card:hover {
+            transform: scale(1.05);
+        }
+
+        .character-card img {
+            max-width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            /*object-fit: contain;*/
+        }
+
+        /* Doraemon Pocket */
+        .doraemon-pocket {
+            width: 250px;
+            height: 250px;
+            background-color: #4a90e2;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .doraemon-pocket:hover {
+            background-color: #357abd;
+        }
+
+        /* Authentication Forms */
+        .auth-form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .auth-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .auth-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--primary-blue);
+            color: white;
+            text-align: center;
+            padding: 15px;
+           
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-brand">Doraemon World</div>
+        <div class="navbar-menu">
+            
+            <a href="#" onclick="showSection('signin')">Sign In</a>
+            <a href="#" onclick="showSection('signup')">Sign Up</a>
+        </div>
+    </nav>
+<div>
+    <!-- Home Section -->
+    <section id="home" class="container section ">
+        <h1 style="text-align: center; color: var(--primary-blue);">Welcome to Doraemon Adventures!</h1>
+        <p style="text-align: center; margin-top: 20px;">
+            Explore the magical world of Doraemon and his incredible friends!
+        </p>
+    </section>
+
+    <!-- Characters Section -->
+    <section id="characters" class="container section2">
+        
+        <h2 style="text-align: center; color: var(--primary-blue);"><a href="#" onclick="showSection('characters')">Doremon Characters</a></h2>
+        <div class="character-grid" id="characterGrid"></div>
+    </section>
+
+    <!-- Gadgets Section -->
+    <section id="gadgets" class="container section">
+        <h2 style="text-align: center; color: var(--primary-blue);">Doraemon's Magic Pocket</h2>
+        <div class="doraemon-pocket" onclick="revealGadget()">
+            Click to Open Pocket!
+        </div>
+        <div id="gadgetResult" style="text-align: center;"></div>
+    </section>
+    <footer class="footer">
+        © 2024 Doraemon Adventures. All Rights Reserved.
+    </footer>
+</div>
+    <!-- Sign In Section -->
+    <section id="signin" class="container section1">
+        <div class="auth-form">
+            <h2 style="text-align: center; color: var(--primary-blue);">Sign In</h2>
+            <form onsubmit="handleSignIn(event)">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Sign Up Section -->
+    <section id="signup" class="container section1">
+        <div class="auth-form">
+            <h2 style="text-align: center; color: var(--primary-blue);">Sign Up</h2>
+            <form onsubmit="handleSignUp(event)">
+                <input type="text" placeholder="Username" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <input type="password" placeholder="Confirm Password" required>
+                <button type="submit">Create Account</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+   
+
+    <script>
+        // Character Data
+        const characters = [
+            { 
+                name: 'Doraemon', 
+                description: 'Blue robotic cat from future', 
+                image: 'dore.jpeg'
+            },
+            { 
+                name: 'Nobita', 
+                description: 'Lazy but kind-hearted boy', 
+                image: 'NobitaNobi.png'
+            },
+            { 
+                name: 'Shizuka', 
+                description: 'Intelligent and caring friend', 
+                image: 'Shizuka2005.webp'
+            },
+            { 
+                name: 'Gian', 
+                description: 'Strong but bullying classmate', 
+                image: 'gian.png'
+            },
+            { 
+                name: 'Suneo', 
+                description: 'Mischievous and boastful friend', 
+                image: 'sunio.jpg'
+            }
+        ];
+
+        // Gadget Data
+        const gadgets = [
+            'Time Machine', 
+            'Anywhere Door', 
+            'Bamboo Copter', 
+            'Memory Bread', 
+            'Teleport Cape', 
+            'Translation Jelly'
+        ];
+
+        // Function to show sections
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+
+            // Populate characters if characters section
+            if (sectionId === 'characters') {
+                const characterGrid = document.getElementById('characterGrid');
+                characterGrid.innerHTML = ''; // Clear previous content
+
+                characters.forEach(character => {
+                    const card = document.createElement('div');
+                    card.classList.add('character-card');
+                    card.innerHTML = `
+                        <img src="${character.image}" alt="${character.name}">
+                        <h3>${character.name}</h3>
+                        <p>${character.description}</p>
+                    `;
+                    characterGrid.appendChild(card);
+                });
+            }
+        }
+
+        // Reveal Random Gadget
+        function revealGadget() {
+            const gadgetResult = document.getElementById('gadgetResult');
+            const randomGadget = gadgets[Math.floor(Math.random() * gadgets.length)];
+            
+            gadgetResult.innerHTML = `
+                <h3 style="color: var(--primary-blue);">Gadget Revealed: ${randomGadget}</h3>
+                <p>A magical tool from Doraemon's incredible collection!</p>
+            `;
+        }
+
+        // Sign In Handler
+        function handleSignIn(event) {
+            event.preventDefault();
+            alert('Welcome to Doraemon Adventures! Sign In Successful.');
+            showSection('home');
+        }
+
+        // Sign Up Handler
+        function handleSignUp(event) {
+            event.preventDefault();
+            alert('Account Created Successfully! Welcome to Doraemon Adventures.');
+            showSection('home');
+        }
+    </script>
+</body>
+</html>
